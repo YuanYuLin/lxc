@@ -1,0 +1,8 @@
+{
+"COMMON":
+[
+{"enabled":1, "name": "0010-lxc-debian-root-password.patch"},
+{"enabled":1, "name": "lxc-2.0-CVE-2017-5985-Ensure-target-netns-is-caller-owned.patch"},
+{"enabled":0, "name": ""}
+]
+}
