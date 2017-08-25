@@ -38,6 +38,9 @@ def set_global(args):
     elif arch == "armel":
         src_lib_dir = iopc.getBaseRootFile("lib/arm-linux-gnueabi")
         src_usr_lib_dir = iopc.getBaseRootFile("usr/lib/arm-linux-gnueabi")
+    elif arch == "x86_64":
+        src_lib_dir = iopc.getBaseRootFile("lib/x86_64-linux-gnu")
+        src_usr_lib_dir = iopc.getBaseRootFile("usr/lib/x86_64-linux-gnu")
     else:
         sys.exit(1)
     dst_lib_dir = ops.path_join(output_dir, "lib")
