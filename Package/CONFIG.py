@@ -7,7 +7,7 @@ arch = ""
 src_lib_dir = ""
 dst_lib_dir = ""
 src_usr_lib_dir = ""
-dst_usr_lib_dir = ""
+dst_lib_dir = ""
 src_usr_bin_dir = ""
 dst_usr_bin_dir = ""
 src_usr_sbin_dir = ""
@@ -22,7 +22,7 @@ def set_global(args):
     global src_lib_dir
     global dst_lib_dir
     global src_usr_lib_dir
-    global dst_usr_lib_dir
+    global dst_lib_dir
     global src_usr_bin_dir
     global dst_usr_bin_dir
     global src_usr_sbin_dir
@@ -44,7 +44,6 @@ def set_global(args):
     else:
         sys.exit(1)
     dst_lib_dir = ops.path_join(output_dir, "lib")
-    dst_usr_lib_dir = ops.path_join(output_dir, "usr/lib")
 
     src_usr_bin_dir = iopc.getBaseRootFile("usr/bin")
     dst_usr_bin_dir = ops.path_join(output_dir, "usr/bin")
@@ -67,11 +66,11 @@ def MAIN_EXTRACT(args):
     ops.ln(dst_lib_dir, "libutil-2.24.so", "libutil.so.1")
     ops.ln(dst_lib_dir, "libutil-2.24.so", "libutil.so")
 
-    ops.mkdir(dst_usr_lib_dir)
-    ops.copyto(ops.path_join(src_usr_lib_dir, "liblxc.so.1.2.0"), dst_usr_lib_dir)
-    ops.ln(dst_usr_lib_dir, "liblxc.so.1.2.0", "liblxc.so.1.2")
-    ops.ln(dst_usr_lib_dir, "liblxc.so.1.2.0", "liblxc.so.1")
-    ops.ln(dst_usr_lib_dir, "liblxc.so.1.2.0", "liblxc.so")
+    ops.mkdir(dst_lib_dir)
+    ops.copyto(ops.path_join(src_usr_lib_dir, "liblxc.so.1.2.0"), dst_lib_dir)
+    ops.ln(dst_lib_dir, "liblxc.so.1.2.0", "liblxc.so.1.2")
+    ops.ln(dst_lib_dir, "liblxc.so.1.2.0", "liblxc.so.1")
+    ops.ln(dst_lib_dir, "liblxc.so.1.2.0", "liblxc.so")
 
     ops.mkdir(dst_usr_bin_dir)
     ops.copyto(ops.path_join(src_usr_bin_dir, "lxc-attach"), dst_usr_bin_dir)
@@ -125,7 +124,7 @@ def MAIN_INSTALL(args):
     set_global(args)
 
     iopc.installBin(args["pkg_name"], ops.path_join(dst_lib_dir, "."), "lib") 
-    iopc.installBin(args["pkg_name"], ops.path_join(dst_usr_lib_dir, "."), "usr/lib") 
+    iopc.installBin(args["pkg_name"], ops.path_join(dst_lib_dir, "."), "lib") 
     iopc.installBin(args["pkg_name"], ops.path_join(dst_usr_bin_dir, "."), "usr/bin") 
     iopc.installBin(args["pkg_name"], ops.path_join(dst_usr_sbin_dir, "."), "usr/sbin") 
     return False
