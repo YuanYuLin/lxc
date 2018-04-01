@@ -51,7 +51,7 @@ def set_global(args):
     src_usr_sbin_dir = iopc.getBaseRootFile("usr/sbin")
     dst_usr_sbin_dir = ops.path_join(output_dir, "usr/sbin")
 
-    src_include_dir = iopc.getBaseRootFile("usr/include/selinux")
+    src_include_dir = iopc.getBaseRootFile("usr/include/lxc")
     dst_include_dir = ops.path_join("include",args["pkg_name"])
 
 def MAIN_ENV(args):
@@ -124,9 +124,9 @@ def MAIN_INSTALL(args):
     set_global(args)
 
     iopc.installBin(args["pkg_name"], ops.path_join(dst_lib_dir, "."), "lib") 
-    iopc.installBin(args["pkg_name"], ops.path_join(dst_lib_dir, "."), "lib") 
     iopc.installBin(args["pkg_name"], ops.path_join(dst_usr_bin_dir, "."), "usr/bin") 
     iopc.installBin(args["pkg_name"], ops.path_join(dst_usr_sbin_dir, "."), "usr/sbin") 
+    iopc.installBin(args["pkg_name"], ops.path_join(src_include_dir, "."), dst_include_dir)
     return False
 
 def MAIN_CLEAN_BUILD(args):
