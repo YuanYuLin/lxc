@@ -29,6 +29,7 @@ def set_global(args):
     global dst_usr_sbin_dir
     global src_include_dir
     global dst_include_dir
+    global dst_usr_lib_dir
     pkg_path = args["pkg_path"]
     output_dir = args["output_path"]
     arch = ops.getEnv("ARCH_ALT")
@@ -54,12 +55,18 @@ def set_global(args):
     src_include_dir = iopc.getBaseRootFile("usr/include/lxc")
     dst_include_dir = ops.path_join("include",args["pkg_name"])
 
+    dst_usr_lib_dir = ops.path_join(output_dir, "usr/lib")
+
 def MAIN_ENV(args):
     set_global(args)
+    ops.exportEnv(ops.setEnv("SUPPORT_LXC", "y"))
     return False
 
 def MAIN_EXTRACT(args):
     set_global(args)
+
+    ops.mkdir(dst_usr_lib_dir)
+    ops.ln(dst_usr_lib_dir, "/tmp/lxc/lib", "x86_64-linux-gnu")
 
     ops.mkdir(dst_lib_dir)
     ops.copyto(ops.path_join(src_lib_dir, "libutil-2.24.so"), dst_lib_dir)
@@ -124,6 +131,7 @@ def MAIN_INSTALL(args):
     set_global(args)
 
     iopc.installBin(args["pkg_name"], ops.path_join(dst_lib_dir, "."), "lib") 
+    iopc.installBin(args["pkg_name"], ops.path_join(dst_usr_lib_dir, "."), "usr/lib") 
     iopc.installBin(args["pkg_name"], ops.path_join(dst_usr_bin_dir, "."), "usr/bin") 
     iopc.installBin(args["pkg_name"], ops.path_join(dst_usr_sbin_dir, "."), "usr/sbin") 
     iopc.installBin(args["pkg_name"], ops.path_join(src_include_dir, "."), dst_include_dir)
