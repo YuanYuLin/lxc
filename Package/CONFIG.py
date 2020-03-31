@@ -67,27 +67,30 @@ def MAIN_EXTRACT(args):
 
     ops.mkdir(dst_usr_lib_dir)
     ops.ln(dst_usr_lib_dir, "/tmp/lxc/lib", "x86_64-linux-gnu")
+    ops.ln(dst_usr_lib_dir, "/tmp/lxc/lib", "arm-linux-gnueabi")
 
     ops.mkdir(dst_lib_dir)
-    ops.copyto(ops.path_join(src_lib_dir, "libutil-2.24.so"), dst_lib_dir)
-    ops.ln(dst_lib_dir, "libutil-2.24.so", "libutil.so.1")
-    ops.ln(dst_lib_dir, "libutil-2.24.so", "libutil.so")
 
-    ops.mkdir(dst_lib_dir)
-    ops.copyto(ops.path_join(src_usr_lib_dir, "liblxc.so.1.2.0"), dst_lib_dir)
-    ops.ln(dst_lib_dir, "liblxc.so.1.2.0", "liblxc.so.1.2")
-    ops.ln(dst_lib_dir, "liblxc.so.1.2.0", "liblxc.so.1")
-    ops.ln(dst_lib_dir, "liblxc.so.1.2.0", "liblxc.so")
+    lib_so = "libutil-2.19.so"
+    ops.copyto(ops.path_join(src_lib_dir, lib_so), dst_lib_dir)
+    ops.ln(dst_lib_dir, lib_so, "libutil.so.1")
+    ops.ln(dst_lib_dir, lib_so, "libutil.so")
+
+    lib_so = "liblxc.so.1.0.6"
+    ops.copyto(ops.path_join(src_usr_lib_dir, lib_so), dst_lib_dir)
+    ops.ln(dst_lib_dir, lib_so, "liblxc.so.1.0")
+    ops.ln(dst_lib_dir, lib_so, "liblxc.so.1")
+    ops.ln(dst_lib_dir, lib_so, "liblxc.so")
 
     ops.mkdir(dst_usr_bin_dir)
     ops.copyto(ops.path_join(src_usr_bin_dir, "lxc-attach"), dst_usr_bin_dir)
     ops.copyto(ops.path_join(src_usr_bin_dir, "lxc-autostart"), dst_usr_bin_dir)
     ops.copyto(ops.path_join(src_usr_bin_dir, "lxc-cgroup"), dst_usr_bin_dir)
     #ops.copyto(ops.path_join(src_usr_bin_dir, "lxc-checkconfig"), dst_usr_bin_dir)
-    ops.copyto(ops.path_join(src_usr_bin_dir, "lxc-checkpoint"), dst_usr_bin_dir)
+    #ops.copyto(ops.path_join(src_usr_bin_dir, "lxc-checkpoint"), dst_usr_bin_dir)
     ops.copyto(ops.path_join(src_usr_bin_dir, "lxc-config"), dst_usr_bin_dir)
     ops.copyto(ops.path_join(src_usr_bin_dir, "lxc-console"), dst_usr_bin_dir)
-    ops.copyto(ops.path_join(src_usr_bin_dir, "lxc-copy"), dst_usr_bin_dir)
+    #ops.copyto(ops.path_join(src_usr_bin_dir, "lxc-copy"), dst_usr_bin_dir)
     ops.copyto(ops.path_join(src_usr_bin_dir, "lxc-create"), dst_usr_bin_dir)
     ops.copyto(ops.path_join(src_usr_bin_dir, "lxc-destroy"), dst_usr_bin_dir)
     ops.copyto(ops.path_join(src_usr_bin_dir, "lxc-device"), dst_usr_bin_dir)
@@ -134,15 +137,15 @@ def MAIN_INSTALL(args):
     iopc.installBin(args["pkg_name"], ops.path_join(dst_usr_lib_dir, "."), "usr/lib") 
     iopc.installBin(args["pkg_name"], ops.path_join(dst_usr_bin_dir, "."), "usr/bin") 
     iopc.installBin(args["pkg_name"], ops.path_join(dst_usr_sbin_dir, "."), "usr/sbin") 
-    iopc.installBin(args["pkg_name"], ops.path_join(src_include_dir, "."), dst_include_dir)
+    #iopc.installBin(args["pkg_name"], ops.path_join(src_include_dir, "."), dst_include_dir)
     return False
 
 def MAIN_SDKENV(args):
     set_global(args)
 
-    cflags = ""
-    cflags += " -I" + ops.path_join(iopc.getSdkPath(), 'usr/include/' + args["pkg_name"])
-    iopc.add_includes(cflags)
+    #cflags = ""
+    #cflags += " -I" + ops.path_join(iopc.getSdkPath(), 'usr/include/' + args["pkg_name"])
+    #iopc.add_includes(cflags)
 
     libs = " -lutil -llxc"
     iopc.add_libs(libs)
